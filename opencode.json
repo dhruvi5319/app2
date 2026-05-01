@@ -1,1 +1,22 @@
-/root/pivota-workspaces/pivota/opencode.json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-6",
+  "permission": {
+    "bash": {
+      "*": "allow"
+    },
+    "edit": {
+      "*": "allow"
+    },
+    "mcp": {
+      "*": "allow"
+    },
+    "read": {
+      "*": "allow"
+    },
+    "webfetch": "allow"
+  },
+  "provider": {
+    "anthropic": {}
+  }
+}
