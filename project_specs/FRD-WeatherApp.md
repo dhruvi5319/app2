@@ -327,7 +327,7 @@ interface OpenMeteoForecastResponse {
 
 The raw API response must be transformed at the data-fetching layer (not in components):
 
-1. **Current conditions:** Map `current.*` fields directly; `is_day` cast `1 → true`, `0 → false`; all temperatures rounded via `Math.round()`; `precipitationProbability` sourced from `daily.precipitation_probability_max[0]` (today's value).
+1. **Current conditions:** Map `current.*` fields directly; `is_day` cast `1 → true`, `0 → false`; all temperatures rounded via `Math.round()`; `precipitationProbability` sourced from `daily.precipitation_probability_max[0]` (today's value). ⚠️ **Important:** `precipitation_probability` is NOT a variable in the Open-Meteo `current` block — it does not exist there and querying it will return `undefined`. Always source today's precipitation probability exclusively from `daily.precipitation_probability_max[0]`.
 2. **Today high/low:** `daily.temperature_2m_max[0]` and `daily.temperature_2m_min[0]`.
 3. **Hourly array:** Slice `hourly.*` arrays to find the index of the current hour, then take 24 entries forward. `null` precipitation values default to `0`. All temperatures rounded.
 4. **Daily array:** Take indices 0–6. `null` values for `precipitation_probability_max` and `uv_index_max` default to `0`. All temperatures rounded.
@@ -557,8 +557,8 @@ F0 is the entry point of the application. It provides two paths for a user to sp
 | No geocoding results | API returns `{}` (no `results`) | Inline message: "City not found — try a different spelling" below input |
 | Geocoding API network error | `fetch()` rejects | Inline message: "Search unavailable — check your connection" below input |
 | Geolocation permission denied | `PERMISSION_DENIED` error code | GPS button resets to idle; no error shown; search input remains usable |
-| Geolocation position unavailable | `POSITION_UNAVAILABLE` error code | GPS button resets to idle; toast: "Location unavailable — try searching manually" |
-| Geolocation timeout | `TIMEOUT` error code (after 10s) | GPS button resets to idle; toast: "Location timed out — try searching manually" |
+| Geolocation position unavailable | `POSITION_UNAVAILABLE` error code | GPS button resets to idle; inline message below search input: "Location unavailable — try searching manually" |
+| Geolocation timeout | `TIMEOUT` error code (after 10s) | GPS button resets to idle; inline message below search input: "Location timed out — try searching manually" |
 | Nominatim reverse geocoding fails | `fetch()` rejects | GPS button resets to idle; inline message: "Couldn't detect location name — try searching manually" |
 | `localStorage` read fails | `SecurityError` or `JSON.parse` error | Recent search chips are not rendered; no error shown; app functions normally |
 
@@ -1017,7 +1017,7 @@ F6 is a collapsible panel that reveals secondary weather metrics — data that t
 - Collapsible trigger (chevron or "Details ▼" label)
 - UV index display with qualitative label
 - Wind direction (cardinal + degrees)
-- Visibility in km (or miles when °F unit is active)
+- Visibility in km (or miles when °F unit is active) — displayed only if returned by the Open-Meteo forecast endpoint; silently omitted if the field is absent (Open-Meteo free tier does not currently return visibility)
 - Humidity (if not shown in hero)
 - Sunrise and sunset times in local timezone
 
@@ -1072,7 +1072,9 @@ function degreesToCardinal(degrees: number): string {
 - Sunrise and sunset times must use `Intl.DateTimeFormat` with the `LocationResult.timezone` option — never `toLocaleTimeString()` without a timezone
 - UV index is displayed to one decimal place if the API returns a float; rounded to integer for the qualitative label lookup
 - Wind direction is always displayed as cardinal + degrees — never degrees alone
+- Wind speed in the Details panel uses the same unit conversion as F1: km/h when °C is active, mph when °F is active (conversion: `Math.round(kmh * 0.621371)`)
 - If `uvIndexMax` is `null` after transformation, the UV row is omitted from the panel
+- If the visibility field is absent from the Open-Meteo API response (not returned by the free-tier forecast endpoint), the visibility row is silently omitted — no placeholder, no "—", no error message; remaining metrics continue to display normally
 - Panel state does not persist to `localStorage`
 
 ### Error States
@@ -1080,17 +1082,19 @@ function degreesToCardinal(degrees: number): string {
 | Scenario | Trigger | UI Response |
 |----------|---------|-------------|
 | `uvIndexMax` is null | null after transformation | UV index row hidden; other metrics display normally |
+| Visibility field absent | Open-Meteo does not return visibility for free-tier forecast endpoint | Visibility row silently omitted; no placeholder, no error; all other metrics display normally |
 | Sunrise/sunset parsing fails | Invalid ISO string | Display "—" in place of time value |
 
 ### Acceptance Criteria (F6)
 
 - **AC-F6-01:** The details panel is collapsed by default on page load and on every page reload.
-- **AC-F6-02:** Clicking/tapping the trigger expands the panel and reveals all available secondary metrics.
+- **AC-F6-02:** Clicking/tapping the trigger expands the panel and reveals all available secondary metrics (visibility is included only when returned by the API; silently omitted if absent).
 - **AC-F6-03:** Sunrise and sunset are displayed in the selected location's local timezone (not the user's device timezone).
 - **AC-F6-04:** Wind direction is displayed as cardinal direction and degrees (e.g., "NW (315°)").
 - **AC-F6-05:** UV index is shown with a qualitative label (Low / Moderate / High / Very High / Extreme).
 - **AC-F6-06:** Panel expansion state is not persisted; returns to collapsed after page reload.
 - **AC-F6-07:** The trigger button meets the 44×44px minimum touch target requirement.
+- **AC-F6-08:** Wind speed in the Details panel is displayed in km/h when °C is active and mph when °F is active (same conversion as F1 hero).
 
 ---
 
@@ -1120,7 +1124,7 @@ F7 ensures users always know how current their data is, and that the app behaves
 
 1. `WeatherData.fetchedAt` is set to `Date.now()` when data resolves successfully.
 2. The freshness indicator renders as `"Updated X minutes ago"` where `X = Math.floor((Date.now() - fetchedAt) / 60_000)`. If less than 1 minute has passed, it shows `"Updated just now"`.
-3. The freshness indicator updates every 60 seconds via a `setInterval` in the component that owns it — it must not trigger a re-render of the full weather data tree.
+3. The freshness indicator updates every 60 seconds via a `setInterval` in the component that owns it — it must not trigger a re-render of the full weather data tree. The interval must be cleared on component unmount via the `useEffect` cleanup return function (`return () => clearInterval(intervalId)`) to prevent stale-closure memory leaks.
 4. TanStack Query is configured with:
    ```typescript
    const queryClient = new QueryClient({
@@ -1446,15 +1450,16 @@ This section consolidates all error states across the application for quick deve
 | F0 | Geocoding API returns no results | "City not found — try a different spelling" | Shown inline below search input |
 | F0 | Geocoding API network error | "Search unavailable — check your connection" | Shown inline below search input |
 | F0 | Geolocation permission denied | *(none)* | GPS button resets; no message |
-| F0 | Geolocation position unavailable | "Location unavailable — try searching manually" | Toast notification |
-| F0 | Geolocation timeout | "Location timed out — try searching manually" | Toast notification |
-| F0 | Nominatim reverse geocoding fails | "Couldn't detect location name — try searching manually" | Inline message |
+| F0 | Geolocation position unavailable | "Location unavailable — try searching manually" | Inline message below search input |
+| F0 | Geolocation timeout | "Location timed out — try searching manually" | Inline message below search input |
+| F0 | Nominatim reverse geocoding fails | "Couldn't detect location name — try searching manually" | Inline message below search input |
 | F1 | Weather API fetch fails | "Unable to load weather for [city]. Check your connection." | Error state with "Try again" button |
 | F7 | Offline, data cached | "Showing cached data from X minutes ago — check your connection" | Persistent banner above content |
 | F7 | Offline, no data cached | "Unable to load weather — check your connection" | Empty state with retry button |
 | F3 | Recharts render failure | *(chart hidden; data table shown)* | Error boundary renders `<table>` fallback |
 | All | Unknown WMO weather code | *(none — transparent)* | Code 0 icon and label used as fallback |
 | F6 | `uvIndexMax` is null | *(none — row hidden)* | UV row omitted from details panel |
+| F6 | Visibility field absent from API | *(none — row hidden)* | Visibility row silently omitted from details panel |
 
 ---
 
@@ -1518,12 +1523,13 @@ A consolidated index of all acceptance criteria by feature for sprint tracking.
 | AC-F5-06 | F5 | No text below 12px rendered size |
 | AC-F5-07 | F5 | Unit toggle visible and usable at all breakpoints |
 | AC-F6-01 | F6 | Details panel collapsed on page load and reload |
-| AC-F6-02 | F6 | Trigger expands panel showing all available secondary metrics |
+| AC-F6-02 | F6 | Trigger expands panel showing all available secondary metrics (visibility silently omitted if absent from API) |
 | AC-F6-03 | F6 | Sunrise/sunset in location's local timezone |
 | AC-F6-04 | F6 | Wind direction as cardinal + degrees |
 | AC-F6-05 | F6 | UV index shown with qualitative label |
 | AC-F6-06 | F6 | Panel state not persisted; resets on reload |
 | AC-F6-07 | F6 | Details panel trigger ≥ 44×44px |
+| AC-F6-08 | F6 | Wind speed in Details panel: km/h when °C active, mph when °F active |
 | AC-F7-01 | F7 | "Updated X minutes ago" visible on main screen when data loaded |
 | AC-F7-02 | F7 | Freshness indicator updates every 60 seconds without data re-fetch |
 | AC-F7-03 | F7 | staleTime 10 minutes — no duplicate calls within window |
@@ -1555,4 +1561,4 @@ A consolidated index of all acceptance criteria by feature for sprint tracking.
 *FRD version 1.0 — generated 2026-05-01*
 *Source: PRD-WeatherApp.md v1.0 (2026-04-29), PROJECT.md*
 *Covers features: F0, F1, F2, F3, F4, F5, F6, F7, F8, F9 — 10/10 features specified ✓*
-*Total acceptance criteria: 68 (AC-F0-01 through AC-F9-08)*
+*Total acceptance criteria: 70 (AC-F0-01 through AC-F9-08, plus AC-F6-08 and visibility fallback behaviours)*

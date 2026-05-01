@@ -308,10 +308,11 @@
 
 **Acceptance Criteria:**
 - [ ] The Details panel is collapsed by default on every page load and every page reload — expansion state is never persisted to `localStorage`
-- [ ] Tapping or clicking the trigger button expands the panel and reveals all available secondary metrics (UV index, wind direction, humidity, sunrise, sunset)
+- [ ] Tapping or clicking the trigger button expands the panel and reveals all available secondary metrics (UV index, wind direction, humidity, sunrise, sunset; visibility is shown only if returned by the API — silently omitted if absent)
 - [ ] UV index is displayed with a qualitative label: Low (0–2), Moderate (3–5), High (6–7), Very High (8–10), or Extreme (11+)
 - [ ] Wind direction is displayed as both cardinal direction and degrees (e.g., "NW (315°)") — never degrees alone
 - [ ] Sunrise and sunset times are displayed in the selected location's local timezone via `Intl.DateTimeFormat` — never the user's device timezone
+- [ ] Wind speed in the Details panel is displayed in km/h when °C is active and mph when °F is active (matching the F1 hero conversion)
 
 **Priority:** P1 | **Feature Ref:** F6 | **Complexity:** M
 
@@ -327,6 +328,7 @@
 - [ ] The trigger button meets the 44×44px minimum touch target requirement
 - [ ] The expand/collapse animation is disabled or reduced to instant when `prefers-reduced-motion: reduce` is active
 - [ ] If `uvIndexMax` is `null` after data transformation, the UV row is omitted silently — no placeholder, no error, and all other metrics continue to display
+- [ ] If the visibility field is absent from the API response, the visibility row is silently omitted — no placeholder, no "—", no error
 
 **Priority:** P1 | **Feature Ref:** F6 | **Complexity:** S
 

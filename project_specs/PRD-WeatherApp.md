@@ -228,7 +228,7 @@ The app is a single-page application with no backend. All state lives in compone
 
 **Capabilities:**
 - Collapsed by default; user taps/clicks to expand (progressive disclosure pattern)
-- When expanded, displays: UV index, wind speed and direction (cardinal + degrees), visibility (km/mi), humidity (if not shown in hero), sunrise time, and sunset time
+- When expanded, displays: UV index, wind speed and direction (cardinal + degrees), humidity (if not shown in hero), sunrise time, and sunset time; visibility (km/mi) is shown only if the Open-Meteo free-tier forecast endpoint returns it — if unavailable, the visibility row is silently omitted with no placeholder
 - All values use the location's local timezone for sunrise/sunset display
 - Panel state does not persist across page reloads — returns to collapsed on next visit
 
