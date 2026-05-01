@@ -29,7 +29,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can toggle °C/°F on the main screen and all temperatures update instantly; preference survives a page reload
   4. A skeleton layout (not a blank screen or spinner-only) appears while data loads; a retry button appears on API failure — never a blank screen
   5. Denying GPS permission leaves city search fully functional with no error or stuck state; recent searches persist as chips and reload weather on click
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Project setup: deps, Tailwind v4, TanStack Query v5, TypeScript types, utility functions
+- [ ] 01-02-PLAN.md — API services (weatherApi, geocodingApi, nominatimApi) + custom React hooks
+- [ ] 01-03-PLAN.md — Search subsystem: SearchBar, AutocompleteDropdown, GpsButton, RecentSearchChips + e2e tests
+- [ ] 01-04-PLAN.md — Hero section: HeroSection, CurrentTemp, ConditionDisplay, WeatherStats, UnitToggle, skeletons, error state + e2e tests
+- [ ] 01-05-PLAN.md — App integration: wire App.tsx, weather SVG icons, end-to-end integration tests
 
 ### Phase 2: Forecasts & Visuals
 **Goal**: Users can see the full forecast picture — 24-hour hourly strip, 7-day daily list with temperature trend chart, and condition-appropriate icons and background gradients across all weather states
@@ -70,7 +77,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/5 | Not started | - |
 | 2. Forecasts & Visuals | 0/TBD | Not started | - |
 | 3. Layout & Details | 0/TBD | Not started | - |
 | 4. Accessibility & Deployment | 0/TBD | Not started | - |
