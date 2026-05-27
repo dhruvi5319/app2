@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-05-27T16:52:47.325Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-05-27T16:57:02.021Z"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
-  percent: 75
+  completed_plans: 7
+  percent: 88
 ---
 
 # State: Simple Weather App
@@ -26,13 +26,13 @@ progress:
 ## Current Position
 
 **Active Phase:** 2 — Forecasts & Visuals (in progress)
-**Active Plan:** Plan 02-01 (complete)
-**Status:** Phase 2 Plan 1 complete, 2 of 3 Phase 2 plans remaining
-**Progress:** [████████░░] 75%
+**Active Plan:** Plan 02-02 (complete)
+**Status:** Phase 2 Plan 2 complete, 1 of 3 Phase 2 plans remaining
+**Progress:** [█████████░] 88%
 
 ```
 Phase 1: Foundation           ██████████  Complete (5/5 plans)
-Phase 2: Forecasts & Visuals  ███░░░░░░░  In progress (1/3 plans)
+Phase 2: Forecasts & Visuals  ██████░░░░  In progress (2/3 plans)
 Phase 3: Layout & Details     ░░░░░░░░░░  Not started
 Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 ```
@@ -43,7 +43,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 6 |
+| Plans complete | - | 7 |
 | Phases complete | 4 | 1 |
 | Requirements shipped | 10 | 0 |
 
@@ -57,6 +57,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Phase 01-foundation P04 | 3 | 2 tasks | 9 files |
 | Phase 01-foundation P05 | 3 | 2 tasks | 21 files |
 | Phase 02-forecasts-visuals P01 | 2 | 2 tasks | 4 files |
+| Phase 02-forecasts-visuals P02 | 2 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | aria-live announcer is a persistent DOM element updated via ref | Per TechArch §11: never re-render live content, use requestAnimationFrame double-tap to ensure screen reader fires |
 | WeatherIcon accepts weatherCode + isDay props (not icon string) | Component resolves icon filename internally from weatherCode+isDay — components pass raw forecast data, not pre-computed icon strings |
 | HourlyCard isFirst prop for "Now" label | First card shows "Now" to orient the user to the current hour; all others use formatHour(time, timezone) |
+| Daily forecast always uses isDay=true for WeatherIcon | FRD §F4 and TechArch §8 mandate daytime icons for all daily forecast rows regardless of current time |
+| sr-only table always in DOM alongside Recharts chart | Proactive screen-reader accessibility; ChartErrorBoundary adds visible fallback on Recharts failures as a separate layer |
 
 ### Critical Risks to Watch
 
@@ -109,9 +112,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-05-27T16:52:47.323Z
-**Stopped at:** Completed 02-01-PLAN.md
-**Next action:** Phase 2 Plan 1 complete — continue Phase 2 with plan 02-02 (daily forecast strip)
+**Last session:** 2026-05-27T16:57:02.019Z
+**Stopped at:** Completed 02-02-PLAN.md
+**Next action:** Phase 2 Plan 2 complete — continue Phase 2 with plan 02-03 (App integration or remaining plan)
 
 **To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `.planning/phases/02-forecasts-visuals/02-01-SUMMARY.md` for hourly strip context.
 
