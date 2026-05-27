@@ -246,3 +246,132 @@ test.describe("App integration — Phase 1 success criteria", () => {
     await expect(chip).toBeVisible();
   });
 });
+
+// ─── Phase 2 Integration Tests ──────────────────────────────────────────────
+
+const MOCK_HOURLY_TIMES = Array.from({ length: 24 }, (_, i) => {
+  const d = new Date("2026-05-01T14:00:00");
+  d.setHours(d.getHours() + i);
+  return d.toISOString().slice(0, 16);
+});
+
+const MOCK_WEATHER_RESPONSE = {
+  latitude: 51.5085,
+  longitude: -0.1257,
+  timezone: "Europe/London",
+  timezone_abbreviation: "BST",
+  utc_offset_seconds: 3600,
+  current_units: {},
+  current: {
+    time: "2026-05-01T14:00",
+    interval: 900,
+    temperature_2m: 18,
+    apparent_temperature: 16,
+    weather_code: 2,
+    is_day: 1,
+    wind_speed_10m: 15,
+    wind_direction_10m: 270,
+    relative_humidity_2m: 65,
+  },
+  hourly_units: {},
+  hourly: {
+    time: MOCK_HOURLY_TIMES,
+    temperature_2m: Array(24).fill(18),
+    weather_code: Array(24).fill(2),
+    is_day: Array(24).fill(1),
+    precipitation_probability: Array(24).fill(30),
+  },
+  daily_units: {},
+  daily: {
+    time: ["2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07"],
+    weather_code: Array(7).fill(2),
+    temperature_2m_max: [20, 19, 22, 18, 17, 23, 21],
+    temperature_2m_min: [12, 11, 14, 10, 9, 15, 13],
+    precipitation_probability_max: [30, 0, 50, 70, 20, 10, 40],
+    sunrise: Array(7).fill("2026-05-01T05:42"),
+    sunset: Array(7).fill("2026-05-01T20:18"),
+    uv_index_max: Array(7).fill(5),
+    wind_speed_10m_max: Array(7).fill(20),
+    wind_direction_10m_dominant: Array(7).fill(270),
+  },
+};
+
+const MOCK_GEOCODING_RESPONSE = {
+  results: [
+    {
+      id: 1,
+      name: "London",
+      latitude: 51.5085,
+      longitude: -0.1257,
+      timezone: "Europe/London",
+      country: "United Kingdom",
+      country_code: "GB",
+      admin1: "England",
+      population: 8900000,
+    },
+  ],
+};
+
+test.describe("Full app integration (Phase 2)", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route("**/geocoding-api.open-meteo.com/**", (route) => {
+      route.fulfill({ json: MOCK_GEOCODING_RESPONSE });
+    });
+    await page.route("**/api.open-meteo.com/**", (route) => {
+      route.fulfill({ json: MOCK_WEATHER_RESPONSE });
+    });
+    await page.goto("/");
+  });
+
+  test("shows empty state before any search", async ({ page }) => {
+    await expect(page.getByText("Search for a city to see weather")).toBeVisible();
+  });
+
+  test("full forecast flow: search → hourly strip + daily list + chart", async ({ page }) => {
+    await page.getByRole("combobox").fill("London");
+    await page.waitForTimeout(400);
+    await page.getByRole("option", { name: /London/ }).first().click();
+
+    // All forecast sections should appear
+    await expect(page.locator('[aria-label="24-hour forecast"]')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('[aria-label="7-day forecast"]')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('[aria-label="Temperature trend chart"]')).toBeVisible({ timeout: 5000 });
+  });
+
+  test("hero section shows current conditions", async ({ page }) => {
+    await page.getByRole("combobox").fill("London");
+    await page.waitForTimeout(400);
+    await page.getByRole("option", { name: /London/ }).first().click();
+
+    // Current temperature visible (18°C from mock)
+    await expect(page.locator("text=18°").first()).toBeVisible({ timeout: 5000 });
+  });
+
+  test("footer attribution links are present", async ({ page }) => {
+    await expect(page.locator('a[href*="open-meteo.com"]')).toBeVisible();
+  });
+
+  test("no blank screen on initial load", async ({ page }) => {
+    const body = await page.locator("body").textContent();
+    expect(body?.trim().length).toBeGreaterThan(0);
+    // Should not be empty
+    await expect(page.getByRole("combobox")).toBeVisible();
+  });
+
+  test("unit toggle visible and working across hero + hourly + daily", async ({ page }) => {
+    await page.getByRole("combobox").fill("London");
+    await page.waitForTimeout(400);
+    await page.getByRole("option", { name: /London/ }).first().click();
+    await page.waitForSelector('[aria-label="24-hour forecast"]', { timeout: 5000 });
+
+    // Toggle should be visible
+    const toggle = page.locator('[role="switch"]').first();
+    await expect(toggle).toBeVisible();
+
+    // Click toggle and check temperatures change (18°C → 64°F)
+    await toggle.click();
+    await page.waitForTimeout(200);
+    // After toggle to F, 18°C = 64°F
+    await expect(page.locator("text=64°").first()).toBeVisible();
+  });
+});
