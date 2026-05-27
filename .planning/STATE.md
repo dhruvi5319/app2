@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-05-27T14:50:50.682Z"
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-05-27T14:57:05.351Z"
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 8
-  completed_plans: 4
-  percent: 50
+  completed_plans: 5
+  percent: 63
 ---
 
 # State: Simple Weather App
@@ -25,13 +25,13 @@ progress:
 
 ## Current Position
 
-**Active Phase:** 1 — Foundation
-**Active Plan:** Plan 05 (next)
-**Status:** In progress
-**Progress:** [█████░░░░░] 50%
+**Active Phase:** 1 — Foundation (complete)
+**Active Plan:** Plan 05 (complete — Phase 1 done)
+**Status:** Phase 1 complete, ready for Phase 2
+**Progress:** [██████░░░░] 63%
 
 ```
-Phase 1: Foundation           ░░░░░░░░░░  Not started
+Phase 1: Foundation           ██████████  Complete (5/5 plans)
 Phase 2: Forecasts & Visuals  ░░░░░░░░░░  Not started
 Phase 3: Layout & Details     ░░░░░░░░░░  Not started
 Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
@@ -43,8 +43,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 4 |
-| Phases complete | 4 | 0 |
+| Plans complete | - | 5 |
+| Phases complete | 4 | 1 |
 | Requirements shipped | 10 | 0 |
 
 ### Execution History
@@ -55,6 +55,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Phase 01-foundation P02 | 3 | 2 tasks | 10 files |
 | Phase 01-foundation P03 | 2 | 2 tasks | 9 files |
 | Phase 01-foundation P04 | 3 | 2 tasks | 9 files |
+| Phase 01-foundation P05 | 3 | 2 tasks | 21 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | `useId()` for ARIA controls in SearchBar | Generates stable, unique IDs per component instance for correct combobox `aria-controls` → listbox association |
 | HeroSection UnitToggle rendered outside conditional blocks | Ensures toggle visible in ALL 4 states (empty/loading/error/data) per FRD §F1 requirement |
 | ConditionDisplay always pairs icon + label | Satisfies WCAG 1.4.1 — weather condition never conveyed by colour/icon alone; label always in adjacent span |
+| App.tsx owns activeLocation state (LocationResult \| null) | Single source of truth passed as prop to HeroSection; SearchBar callback propagates upward |
+| aria-live announcer is a persistent DOM element updated via ref | Per TechArch §11: never re-render live content, use requestAnimationFrame double-tap to ensure screen reader fires |
 
 ### Critical Risks to Watch
 
@@ -103,9 +106,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-05-27T14:50:50.680Z
-**Stopped at:** Completed 01-04-PLAN.md
-**Next action:** Execute plan 01-05 if exists, or verify Phase 1 and begin Phase 2
+**Last session:** 2026-05-27T14:57:05.349Z
+**Stopped at:** Completed 01-05-PLAN.md
+**Next action:** Phase 1 complete — run `/pivota_spec-verify-work 01-foundation` then begin Phase 2
 
 **To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `.planning/phases/01-foundation/01-01-SUMMARY.md` for what was completed.
 
