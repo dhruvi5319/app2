@@ -48,7 +48,12 @@ Plans:
   2. A 7-day daily list renders with "Today" as the first label, daytime icons, high-before-low temperatures, and a Recharts AreaChart temperature trend that re-scales when the unit is toggled
   3. Every WMO weather code 0–99 renders an icon without a broken image; unknown codes fall back to Clear Sky gracefully
   4. The hero background gradient updates to reflect the current weather state and time of day (clear day = sky blue, night = deep navy, storm = grey, etc.) and all text on every gradient passes WCAG 4.5:1 contrast
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — HourlyStrip + HourlyCard + SkeletonHourly + Playwright e2e tests (F2)
+- [ ] 02-02-PLAN.md — DailyForecastList + DailyForecastRow + TemperatureTrendChart + ChartErrorBoundary + SkeletonDaily + Playwright e2e tests (F3)
+- [ ] 02-03-PLAN.md — All Phase 1 unexecuted components + App.tsx integration + 19 SVG icons + integration e2e tests (F2, F3, F4)
 
 ### Phase 3: Layout & Details
 **Goal**: The app is usable on every viewport from 375px to 1280px+, offers a collapsible Details panel for power users, and always shows data freshness — including graceful offline behavior
@@ -79,7 +84,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/5 | Not started | - |
-| 2. Forecasts & Visuals | 0/TBD | Not started | - |
+| 2. Forecasts & Visuals | 0/3 | Not started | - |
 | 3. Layout & Details | 0/TBD | Not started | - |
 | 4. Accessibility & Deployment | 0/TBD | Not started | - |
 
