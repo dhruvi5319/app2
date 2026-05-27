@@ -2,14 +2,15 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: In progress
-last_updated: "2026-05-01T04:18:17.182Z"
+status: executing
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-05-27T14:57:05.351Z"
 progress:
   total_phases: 4
-  completed_phases: 0
-  total_plans: 5
-  completed_plans: 1
-  percent: 20
+  completed_phases: 1
+  total_plans: 8
+  completed_plans: 5
+  percent: 63
 ---
 
 # State: Simple Weather App
@@ -24,13 +25,13 @@ progress:
 
 ## Current Position
 
-**Active Phase:** 1 — Foundation
-**Active Plan:** Plan 02 (next)
-**Status:** In progress
-**Progress:** [██░░░░░░░░] 20%
+**Active Phase:** 1 — Foundation (complete)
+**Active Plan:** Plan 05 (complete — Phase 1 done)
+**Status:** Phase 1 complete, ready for Phase 2
+**Progress:** [██████░░░░] 63%
 
 ```
-Phase 1: Foundation           ░░░░░░░░░░  Not started
+Phase 1: Foundation           ██████████  Complete (5/5 plans)
 Phase 2: Forecasts & Visuals  ░░░░░░░░░░  Not started
 Phase 3: Layout & Details     ░░░░░░░░░░  Not started
 Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
@@ -42,8 +43,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 1 |
-| Phases complete | 4 | 0 |
+| Plans complete | - | 5 |
+| Phases complete | 4 | 1 |
 | Requirements shipped | 10 | 0 |
 
 ### Execution History
@@ -51,6 +52,10 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Plan | Duration (min) | Tasks | Files |
 |------|---------------|-------|-------|
 | Phase 01-foundation P01 | 15 | 3 tasks | 15 files |
+| Phase 01-foundation P02 | 3 | 2 tasks | 10 files |
+| Phase 01-foundation P03 | 2 | 2 tasks | 9 files |
+| Phase 01-foundation P04 | 3 | 2 tasks | 9 files |
+| Phase 01-foundation P05 | 3 | 2 tasks | 21 files |
 
 ## Accumulated Context
 
@@ -65,6 +70,15 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | TanStack Query `staleTime: 10 minutes` | Rate limit protection + prevents redundant fetches |
 | Vite 5 instead of Vite 8 | Node 18 constraint (v18.20.4); functionally equivalent for this project |
 | No backend for v1 | All state in component-local state, TanStack Query cache, and `localStorage` |
+| `precipitationProbability` from `daily.precipitation_probability_max[0]` | Open-Meteo's `current` block has no precip probability field — must source from daily[0] |
+| `useReverseGeocode` uses `retry: false` | GPS-triggered reverse geocode calls should not auto-retry — user action is fleeting |
+| `onMouseDown preventDefault` on dropdown items | Prevents input blur-before-select race condition in combobox autocomplete |
+| `setTimeout 150ms` on input `onBlur` | Allows dropdown mousedown to fire before the dropdown closes on input blur |
+| `useId()` for ARIA controls in SearchBar | Generates stable, unique IDs per component instance for correct combobox `aria-controls` → listbox association |
+| HeroSection UnitToggle rendered outside conditional blocks | Ensures toggle visible in ALL 4 states (empty/loading/error/data) per FRD §F1 requirement |
+| ConditionDisplay always pairs icon + label | Satisfies WCAG 1.4.1 — weather condition never conveyed by colour/icon alone; label always in adjacent span |
+| App.tsx owns activeLocation state (LocationResult \| null) | Single source of truth passed as prop to HeroSection; SearchBar callback propagates upward |
+| aria-live announcer is a persistent DOM element updated via ref | Per TechArch §11: never re-render live content, use requestAnimationFrame double-tap to ensure screen reader fires |
 
 ### Critical Risks to Watch
 
@@ -92,9 +106,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-05-01T04:18:17.177Z
-**Stopped at:** Completed 01-foundation-01-PLAN.md
-**Next action:** Execute plan 01-02 (Phase 1, Plan 2)
+**Last session:** 2026-05-27T14:57:05.349Z
+**Stopped at:** Completed 01-05-PLAN.md
+**Next action:** Phase 1 complete — run `/pivota_spec-verify-work 01-foundation` then begin Phase 2
 
 **To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `.planning/phases/01-foundation/01-01-SUMMARY.md` for what was completed.
 
