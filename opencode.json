@@ -8,6 +8,10 @@
     "edit": {
       "*": "allow"
     },
+    "external_directory": {
+      "~/.config/opencode/agents/**": "allow",
+      "~/.config/opencode/pivota_spec-framework/**": "allow"
+    },
     "mcp": {
       "*": "allow"
     },

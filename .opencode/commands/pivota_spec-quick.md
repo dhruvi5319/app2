@@ -1,6 +1,6 @@
 ---
 description: Execute a quick task with Pivota Spec guarantees (atomic commits, state tracking) but skip optional agents
-argument-hint: ""
+argument-hint: "[task description]"
 tools:
   read: true
   write: true
@@ -35,6 +35,8 @@ Use when: You know exactly what to do and the task is small enough to not need r
 Execute the quick workflow from @/home/daytona/.config/opencode/pivota_spec-framework/workflows/quick.md end-to-end.
 Preserve all workflow gates (validation, task description, planning, execution, state updates, commits).
 
-User'\''s task description: $ARGUMENTS
+User'\''s task description (may be empty — workflow Step 1 will prompt if so):
+
+$ARGUMENTS
 </process>
 
