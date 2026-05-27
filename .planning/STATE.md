@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-foundation-02-PLAN.md
-last_updated: "2026-05-27T14:40:13.476Z"
+stopped_at: Completed 01-foundation-03-PLAN.md
+last_updated: "2026-05-27T14:45:22.824Z"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 2
-  percent: 25
+  completed_plans: 3
+  percent: 38
 ---
 
 # State: Simple Weather App
@@ -26,9 +26,9 @@ progress:
 ## Current Position
 
 **Active Phase:** 1 — Foundation
-**Active Plan:** Plan 03 (next)
+**Active Plan:** Plan 04 (next)
 **Status:** In progress
-**Progress:** [███░░░░░░░] 25%
+**Progress:** [████░░░░░░] 38%
 
 ```
 Phase 1: Foundation           ░░░░░░░░░░  Not started
@@ -43,7 +43,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 2 |
+| Plans complete | - | 3 |
 | Phases complete | 4 | 0 |
 | Requirements shipped | 10 | 0 |
 
@@ -53,6 +53,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 |------|---------------|-------|-------|
 | Phase 01-foundation P01 | 15 | 3 tasks | 15 files |
 | Phase 01-foundation P02 | 3 | 2 tasks | 10 files |
+| Phase 01-foundation P03 | 2 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | No backend for v1 | All state in component-local state, TanStack Query cache, and `localStorage` |
 | `precipitationProbability` from `daily.precipitation_probability_max[0]` | Open-Meteo's `current` block has no precip probability field — must source from daily[0] |
 | `useReverseGeocode` uses `retry: false` | GPS-triggered reverse geocode calls should not auto-retry — user action is fleeting |
+| `onMouseDown preventDefault` on dropdown items | Prevents input blur-before-select race condition in combobox autocomplete |
+| `setTimeout 150ms` on input `onBlur` | Allows dropdown mousedown to fire before the dropdown closes on input blur |
+| `useId()` for ARIA controls in SearchBar | Generates stable, unique IDs per component instance for correct combobox `aria-controls` → listbox association |
 
 ### Critical Risks to Watch
 
@@ -96,9 +100,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-05-27T14:40:13.474Z
-**Stopped at:** Completed 01-foundation-02-PLAN.md
-**Next action:** Execute plan 01-03 (Phase 1, Plan 3)
+**Last session:** 2026-05-27T14:45:22.823Z
+**Stopped at:** Completed 01-foundation-03-PLAN.md
+**Next action:** Execute plan 01-04 (Phase 1, Plan 4)
 
 **To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `.planning/phases/01-foundation/01-01-SUMMARY.md` for what was completed.
 
