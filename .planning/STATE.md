@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-foundation-03-PLAN.md
-last_updated: "2026-05-27T14:45:22.824Z"
+stopped_at: Completed 01-04-PLAN.md
+last_updated: "2026-05-27T14:50:50.682Z"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 8
-  completed_plans: 3
-  percent: 38
+  completed_plans: 4
+  percent: 50
 ---
 
 # State: Simple Weather App
@@ -26,9 +26,9 @@ progress:
 ## Current Position
 
 **Active Phase:** 1 — Foundation
-**Active Plan:** Plan 04 (next)
+**Active Plan:** Plan 05 (next)
 **Status:** In progress
-**Progress:** [████░░░░░░] 38%
+**Progress:** [█████░░░░░] 50%
 
 ```
 Phase 1: Foundation           ░░░░░░░░░░  Not started
@@ -43,7 +43,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 3 |
+| Plans complete | - | 4 |
 | Phases complete | 4 | 0 |
 | Requirements shipped | 10 | 0 |
 
@@ -54,6 +54,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Phase 01-foundation P01 | 15 | 3 tasks | 15 files |
 | Phase 01-foundation P02 | 3 | 2 tasks | 10 files |
 | Phase 01-foundation P03 | 2 | 2 tasks | 9 files |
+| Phase 01-foundation P04 | 3 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | `onMouseDown preventDefault` on dropdown items | Prevents input blur-before-select race condition in combobox autocomplete |
 | `setTimeout 150ms` on input `onBlur` | Allows dropdown mousedown to fire before the dropdown closes on input blur |
 | `useId()` for ARIA controls in SearchBar | Generates stable, unique IDs per component instance for correct combobox `aria-controls` → listbox association |
+| HeroSection UnitToggle rendered outside conditional blocks | Ensures toggle visible in ALL 4 states (empty/loading/error/data) per FRD §F1 requirement |
+| ConditionDisplay always pairs icon + label | Satisfies WCAG 1.4.1 — weather condition never conveyed by colour/icon alone; label always in adjacent span |
 
 ### Critical Risks to Watch
 
@@ -100,9 +103,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-05-27T14:45:22.823Z
-**Stopped at:** Completed 01-foundation-03-PLAN.md
-**Next action:** Execute plan 01-04 (Phase 1, Plan 4)
+**Last session:** 2026-05-27T14:50:50.680Z
+**Stopped at:** Completed 01-04-PLAN.md
+**Next action:** Execute plan 01-05 if exists, or verify Phase 1 and begin Phase 2
 
 **To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `.planning/phases/01-foundation/01-01-SUMMARY.md` for what was completed.
 
