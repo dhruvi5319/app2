@@ -12,8 +12,8 @@ Four phases deliver a frontend-only weather SPA from scaffolded project to produ
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Location search + current conditions with full error/loading safety nets
-- [ ] **Phase 2: Forecasts & Visuals** - Hourly strip, 7-day daily list, complete icon and gradient system
+- [x] **Phase 1: Foundation** - Location search + current conditions with full error/loading safety nets
+- [x] **Phase 2: Forecasts & Visuals** - Hourly strip, 7-day daily list, complete icon and gradient system
 - [ ] **Phase 3: Layout & Details** - Responsive layout across all breakpoints, details panel, offline/freshness handling
 - [ ] **Phase 4: Accessibility & Deployment** - WCAG 2.2 AA compliance, Vercel production deploy, attribution footer
 
@@ -41,7 +41,8 @@ Plans:
 - [ ] 01-05-PLAN.md — App integration: wire App.tsx, weather SVG icons, end-to-end integration tests
 
 ### Phase 2: Forecasts & Visuals
-**Status**: passed
+**Status**: completed (2026-05-27)
+**Last Updated**: 2026-05-27T00:00:00Z
 **Goal**: Users can see the full forecast picture — 24-hour hourly strip, 7-day daily list with temperature trend chart, and condition-appropriate icons and background gradients across all weather states
 **Depends on**: Phase 1
 **Requirements**: F2, F3, F4
@@ -53,9 +54,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — HourlyStrip + HourlyCard + SkeletonHourly + Playwright e2e tests (F2)
-- [ ] 02-02-PLAN.md — DailyForecastList + DailyForecastRow + TemperatureTrendChart + ChartErrorBoundary + SkeletonDaily + Playwright e2e tests (F3)
-- [ ] 02-03-PLAN.md — All Phase 1 unexecuted components + App.tsx integration + 19 SVG icons + integration e2e tests (F2, F3, F4)
+- [x] 02-01-PLAN.md — HourlyStrip + HourlyCard + SkeletonHourly + Playwright e2e tests (F2)
+- [x] 02-02-PLAN.md — DailyForecastList + DailyForecastRow + TemperatureTrendChart + ChartErrorBoundary + SkeletonDaily + Playwright e2e tests (F3)
+- [x] 02-03-PLAN.md — All Phase 1 unexecuted components + App.tsx integration + 19 SVG icons + integration e2e tests (F2, F3, F4)
 
 ### Phase 3: Layout & Details
 **Goal**: The app is usable on every viewport from 375px to 1280px+, offers a collapsible Details panel for power users, and always shows data freshness — including graceful offline behavior
@@ -85,8 +86,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/5 | Not started | - |
-| 2. Forecasts & Visuals | 0/3 | Not started | - |
+| 1. Foundation | 5/5 | Complete | 2026-05-27 |
+| 2. Forecasts & Visuals | 3/3 | Complete | 2026-05-27 |
 | 3. Layout & Details | 0/TBD | Not started | - |
 | 4. Accessibility & Deployment | 0/TBD | Not started | - |
 

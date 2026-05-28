@@ -2,15 +2,15 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-05-PLAN.md
-last_updated: "2026-05-27T14:57:05.351Z"
+status: completed
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-05-27T17:04:20.230Z"
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 5
-  percent: 63
+  completed_plans: 8
+  percent: 100
 ---
 
 # State: Simple Weather App
@@ -19,20 +19,20 @@ progress:
 
 **Core Value:** Answer "do I need an umbrella?" in under 3 seconds — current temperature and conditions visible above the fold with zero friction, no account, no ads.
 
-**Current Focus:** Phase 1 — Foundation (location search + current conditions)
+**Current Focus:** Phase 2 — Forecasts & Visuals complete; Phase 3 ready to begin
 
 ---
 
 ## Current Position
 
-**Active Phase:** 1 — Foundation (complete)
-**Active Plan:** Plan 05 (complete — Phase 1 done)
-**Status:** Phase 1 complete, ready for Phase 2
-**Progress:** [██████░░░░] 63%
+**Active Phase:** 2 — Forecasts & Visuals (complete)
+**Active Plan:** Plan 02-03 (complete)
+**Status:** Phase 2 all 3 plans complete — ready for Phase 3 Layout & Details
+**Progress:** [██████████] 100%
 
 ```
 Phase 1: Foundation           ██████████  Complete (5/5 plans)
-Phase 2: Forecasts & Visuals  ░░░░░░░░░░  Not started
+Phase 2: Forecasts & Visuals  ██████████  Complete (3/3 plans)
 Phase 3: Layout & Details     ░░░░░░░░░░  Not started
 Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 ```
@@ -43,8 +43,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 5 |
-| Phases complete | 4 | 1 |
+| Plans complete | - | 8 |
+| Phases complete | 4 | 2 |
 | Requirements shipped | 10 | 0 |
 
 ### Execution History
@@ -56,6 +56,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Phase 01-foundation P03 | 2 | 2 tasks | 9 files |
 | Phase 01-foundation P04 | 3 | 2 tasks | 9 files |
 | Phase 01-foundation P05 | 3 | 2 tasks | 21 files |
+| Phase 02-forecasts-visuals P01 | 2 | 2 tasks | 4 files |
+| Phase 02-forecasts-visuals P02 | 2 | 2 tasks | 6 files |
+| Phase 02-forecasts-visuals P03 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -79,6 +82,13 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | ConditionDisplay always pairs icon + label | Satisfies WCAG 1.4.1 — weather condition never conveyed by colour/icon alone; label always in adjacent span |
 | App.tsx owns activeLocation state (LocationResult \| null) | Single source of truth passed as prop to HeroSection; SearchBar callback propagates upward |
 | aria-live announcer is a persistent DOM element updated via ref | Per TechArch §11: never re-render live content, use requestAnimationFrame double-tap to ensure screen reader fires |
+| WeatherIcon accepts weatherCode + isDay props (not icon string) | Component resolves icon filename internally from weatherCode+isDay — components pass raw forecast data, not pre-computed icon strings |
+| HourlyCard isFirst prop for "Now" label | First card shows "Now" to orient the user to the current hour; all others use formatHour(time, timezone) |
+| Daily forecast always uses isDay=true for WeatherIcon | FRD §F4 and TechArch §8 mandate daytime icons for all daily forecast rows regardless of current time |
+| sr-only table always in DOM alongside Recharts chart | Proactive screen-reader accessibility; ChartErrorBoundary adds visible fallback on Recharts failures as a separate layer |
+| App.tsx WeatherApp inner component pattern | AppErrorBoundary wraps outer App(); inner WeatherApp() has hooks access — clean separation of error boundary and component logic |
+| useWeatherData in both App and HeroSection | TanStack Query deduplicates by query key — zero extra requests; both consumers get same cached data |
+| 18 WMO icons (not 19 as plan text stated) | Plan file list had 18 entries matching WMO_CODE_MAP exactly — text was a counting error |
 
 ### Critical Risks to Watch
 
@@ -106,11 +116,11 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-05-27T14:57:05.349Z
-**Stopped at:** Completed 01-05-PLAN.md
-**Next action:** Phase 1 complete — run `/pivota_spec-verify-work 01-foundation` then begin Phase 2
+**Last session:** 2026-05-27T17:04:20.229Z
+**Stopped at:** Completed 02-03-PLAN.md
+**Next action:** Phase 2 complete — plan Phase 3 (Layout & Details) with `/pivota_spec-plan-phase 03` or verify Phase 2 with `/pivota_spec-verify-work 02-forecasts-visuals`
 
-**To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `.planning/phases/01-foundation/01-01-SUMMARY.md` for what was completed.
+**To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then Phase 2 SUMMARY files for complete context before starting Phase 3.
 
 ---
 *STATE.md initialized: 2026-05-01*
