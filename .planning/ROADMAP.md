@@ -59,7 +59,7 @@ Plans:
 - [x] 02-03-PLAN.md — All Phase 1 unexecuted components + App.tsx integration + 19 SVG icons + integration e2e tests (F2, F3, F4)
 
 ### Phase 3: Layout & Details
-**Status**: In Progress
+**Status**: executing
 **Goal**: The app is usable on every viewport from 375px to 1280px+, offers a collapsible Details panel for power users, and always shows data freshness — including graceful offline behavior
 **Depends on**: Phase 2
 **Requirements**: F5, F6, F7
