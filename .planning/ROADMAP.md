@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation
-**Status**: completed (2026-05-27)
+**Status**: In Progress
 **Last Updated**: 2026-05-27T15:30:14Z
 **Goal**: Users can search for any city and see current weather conditions — temperature, feels-like, condition icon, high/low, precipitation, humidity, wind — with no blank screens on any failure path
 **Depends on**: Nothing (first phase)
