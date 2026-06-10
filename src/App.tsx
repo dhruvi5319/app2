@@ -13,6 +13,7 @@ import { ChartErrorBoundary } from "./error-boundaries/ChartErrorBoundary";
 import { AppErrorBoundary } from "./error-boundaries/AppErrorBoundary";
 import { useWeatherData } from "./hooks/useWeatherData";
 import { useUnitPreference } from "./hooks/useUnitPreference";
+import { DetailsPanel } from "./components/weather/DetailsPanel";
 
 /**
  * Inner component has access to hooks.
@@ -26,6 +27,7 @@ import { useUnitPreference } from "./hooks/useUnitPreference";
  */
 function WeatherApp() {
   const [activeLocation, setActiveLocation] = useState<LocationResult | null>(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const { unit, toggle } = useUnitPreference();
   const { data: weatherData, isLoading, isError } = useWeatherData(activeLocation);
   const announcerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +35,7 @@ function WeatherApp() {
   // Announce location changes to screen readers (TechArch §11)
   const handleLocationSelect = (location: LocationResult) => {
     setActiveLocation(location);
+    setDetailsOpen(false);
     if (announcerRef.current) {
       announcerRef.current.textContent = "";
       requestAnimationFrame(() => {
@@ -69,6 +72,18 @@ function WeatherApp() {
             unit={unit}
             onUnitToggle={handleUnitToggle}
           />
+
+          {/* Details panel: collapsible secondary metrics (F6) */}
+          {weatherData && (
+            <DetailsPanel
+              isOpen={detailsOpen}
+              onToggle={() => setDetailsOpen((prev) => !prev)}
+              current={weatherData.current}
+              daily={weatherData.daily}
+              timezone={activeLocation.timezone}
+              unit={unit}
+            />
+          )}
 
           {/* Hourly strip: full width, horizontal scroll */}
           <div className="mt-4">
