@@ -21,7 +21,7 @@ export function DailyForecastRow({ forecast, timezone, unit, index }: DailyForec
 
   return (
     <div
-      className="flex flex-row items-center justify-between gap-2 py-2 px-3 min-h-[44px]"
+      className="flex flex-row items-center justify-between gap-2 py-3 px-3 min-h-[44px]"
       aria-label={`${dayLabel}: ${label}, High ${high}${sym}, Low ${low}${sym}, ${forecast.precipitationProbability}% precipitation`}
     >
       <span className="w-16 text-sm font-medium text-white">{dayLabel}</span>

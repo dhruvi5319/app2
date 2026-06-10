@@ -63,52 +63,53 @@ function WeatherApp() {
 
       {activeLocation ? (
         <>
-          {/* Hero: current conditions with gradient, skeleton, error, UnitToggle */}
+          {/* Hero: full width at all breakpoints */}
           <HeroSection
             location={activeLocation}
             unit={unit}
             onUnitToggle={handleUnitToggle}
           />
 
-          {/* Hourly strip — 24-hour forecast */}
-          {isLoading && <SkeletonHourly />}
-          {weatherData && (
-            <HourlyStrip
-              hourly={weatherData.hourly}
-              timezone={activeLocation.timezone}
-              unit={unit}
-            />
-          )}
+          {/* Hourly strip: full width, horizontal scroll */}
+          <div className="mt-4">
+            {isLoading && <SkeletonHourly />}
+            {weatherData && (
+              <HourlyStrip
+                hourly={weatherData.hourly}
+                timezone={activeLocation.timezone}
+                unit={unit}
+              />
+            )}
+          </div>
 
-          {/* Daily forecast + temperature trend chart */}
-          {isLoading && <SkeletonDaily />}
-          {weatherData && (
-            <div className="w-full lg:flex lg:gap-4">
-              <div className="lg:flex-1">
+          {/* Daily + Chart: stacked on mobile, side-by-side on lg+ */}
+          <div className="mt-4">
+            {isLoading && <SkeletonDaily />}
+            {weatherData && (
+              <div className="lg:grid lg:grid-cols-2 lg:gap-6">
                 <DailyForecastList
                   daily={weatherData.daily}
                   timezone={activeLocation.timezone}
                   unit={unit}
                 />
-              </div>
-              <div className="lg:flex-1 mt-4 lg:mt-0">
-                <ChartErrorBoundary
-                  daily={weatherData.daily}
-                  timezone={activeLocation.timezone}
-                  unit={unit}
-                >
-                  <TemperatureTrendChart
+                <div className="mt-4 lg:mt-0">
+                  <ChartErrorBoundary
                     daily={weatherData.daily}
                     timezone={activeLocation.timezone}
                     unit={unit}
-                    locationName={activeLocation.name}
-                  />
-                </ChartErrorBoundary>
+                  >
+                    <TemperatureTrendChart
+                      daily={weatherData.daily}
+                      timezone={activeLocation.timezone}
+                      unit={unit}
+                      locationName={activeLocation.name}
+                    />
+                  </ChartErrorBoundary>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* isError without data: HeroSection shows ErrorState; no additional indicator needed */}
           {isError && !weatherData && !isLoading && null}
         </>
       ) : (

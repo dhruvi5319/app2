@@ -32,6 +32,6 @@
     "vite": "^5.4.10"
   },
   "optionalDependencies": {
-    "@tailwindcss/oxide-linux-x64-gnu": "file:../../../../tmp/tailwindcss-oxide-linux-x64-gnu-4.2.4.tgz"
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.2.4"
   }
 }
