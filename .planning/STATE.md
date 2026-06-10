@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-06-10T20:37:08.327Z"
+stopped_at: Completed 03-03-PLAN.md
+last_updated: "2026-06-10T20:41:36.269Z"
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 11
-  completed_plans: 10
-  percent: 91
+  completed_plans: 11
+  percent: 100
 ---
 
 # State: Simple Weather App
@@ -19,21 +19,21 @@ progress:
 
 **Core Value:** Answer "do I need an umbrella?" in under 3 seconds — current temperature and conditions visible above the fold with zero friction, no account, no ads.
 
-**Current Focus:** Phase 3 — Layout & Details (in progress — 03-02 complete)
+**Current Focus:** Phase 3 — Layout & Details (complete — all 3 plans done)
 
 ---
 
 ## Current Position
 
-**Active Phase:** 3 — Layout & Details (in progress)
-**Active Plan:** Plan 03-02 (complete)
-**Status:** Phase 3 plans 1+2 complete — F5 responsive layout + F6 collapsible Details panel implemented
-**Progress:** [█████████░] 91%
+**Active Phase:** 3 — Layout & Details (complete)
+**Active Plan:** Plan 03-03 (complete)
+**Status:** Phase 3 all plans complete — F5 responsive layout + F6 Details panel + F7 offline/freshness implemented
+**Progress:** [██████████] 100%
 
 ```
 Phase 1: Foundation           ██████████  Complete (5/5 plans)
 Phase 2: Forecasts & Visuals  ██████████  Complete (3/3 plans)
-Phase 3: Layout & Details     ████░░░░░░  In progress (2/? plans)
+Phase 3: Layout & Details     ██████████  Complete (3/3 plans)
 Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 ```
 
@@ -43,9 +43,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 10 |
-| Phases complete | 4 | 2 |
-| Requirements shipped | 10 | 2 (F5 responsive layout, F6 details panel) |
+| Plans complete | - | 11 |
+| Phases complete | 4 | 3 |
+| Requirements shipped | 11 | 3 (F5 responsive layout, F6 details panel, F7 offline/freshness) |
 
 ### Execution History
 
@@ -61,6 +61,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Phase 02-forecasts-visuals P03 | 3 | 2 tasks | 3 files |
 | Phase 03-layout-details P01 | 2 | 2 tasks | 5 files |
 | Phase 03-layout-details P02 | 2 | 2 tasks | 3 files |
+| Phase 03-layout-details P03 | 2 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | `@tailwindcss/oxide-linux-x64-gnu` installed alongside musl variant | Environment is glibc-based; musl native binding was installed by npm but can't load without musl libc |
 | DetailsPanel shows windSpeedMax (not windSpeed) | Panel displays today's max wind speed — more meaningful for planning; current windSpeed removed as unused |
 | Visibility omitted from DetailsPanel | Open-Meteo current block has no visibility field; silently omitted per F6 spec |
+| OfflineBanner only renders when offline + fetchedAt > 0 | No-cache + no-network handled by TanStack Query isError path (ErrorState) — avoids duplicated error state logic |
+| City not found message kept in SearchBar.tsx | Already implemented via showNoResults — no OfflineBanner duplication needed |
 
 ### Critical Risks to Watch
 
@@ -122,11 +125,11 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-06-10T20:37:08.326Z
-**Stopped at:** Completed 03-02-PLAN.md
-**Next action:** Phase 3 plans 01+02 complete — continue Phase 3 next plan (F7 offline/freshness) or verify with `/pivota_spec-verify-work 03-layout-details`
+**Last session:** 2026-06-10T20:41:36.267Z
+**Stopped at:** Completed 03-03-PLAN.md
+**Next action:** Phase 3 complete (F5+F6+F7 all done) — verify with `/pivota_spec-verify-work 03-layout-details` or plan Phase 4 with `/pivota_spec-plan-phase 04`
 
-**To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `03-02-SUMMARY.md` for Phase 3 plan 2 context.
+**To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `03-03-SUMMARY.md` for Phase 3 plan 3 context.
 
 ---
 *STATE.md initialized: 2026-05-01*
