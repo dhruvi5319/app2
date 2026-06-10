@@ -14,6 +14,8 @@ import { AppErrorBoundary } from "./error-boundaries/AppErrorBoundary";
 import { useWeatherData } from "./hooks/useWeatherData";
 import { useUnitPreference } from "./hooks/useUnitPreference";
 import { DetailsPanel } from "./components/weather/DetailsPanel";
+import { useOnlineStatus } from "./hooks/useOnlineStatus";
+import { OfflineBanner } from "./components/feedback/OfflineBanner";
 
 /**
  * Inner component has access to hooks.
@@ -31,6 +33,7 @@ function WeatherApp() {
   const { unit, toggle } = useUnitPreference();
   const { data: weatherData, isLoading, isError } = useWeatherData(activeLocation);
   const announcerRef = useRef<HTMLDivElement>(null);
+  const isOnline = useOnlineStatus();
 
   // Announce location changes to screen readers (TechArch §11)
   const handleLocationSelect = (location: LocationResult) => {
@@ -52,6 +55,9 @@ function WeatherApp() {
 
   return (
     <AppLayout>
+      {/* Offline banner — shown when offline + cached data available */}
+      <OfflineBanner isOnline={isOnline} fetchedAt={weatherData?.fetchedAt ?? 0} />
+
       {/* Global aria-live announcer — persistent DOM element, updated via ref */}
       {/* Per TechArch §11: never re-render live content, only update this element */}
       <div
