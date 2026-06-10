@@ -1,0 +1,17 @@
+{
+  "generator_version": "init-dev-server@1",
+  "catalog_entry": "react-vite",
+  "generated_at": "2026-06-10T00:00:00Z",
+  "inspection_inputs_hash": "7f8678e06a7de6e8d269e1cc1029532704c9e2e0381db6f6c103ba3f8c628c98",
+  "inspection_inputs": {
+    "matched_globs": [
+      "package.json",
+      "vite.config.ts"
+    ],
+    "manifest_signatures": [
+      "package.json:dep:vite@^5.4.10",
+      "package.json:dev-script:vite"
+    ],
+    "existing_scripts": []
+  }
+}
