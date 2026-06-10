@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation
-**Status**: In Progress
+**Status**: passed
 **Last Updated**: 2026-05-27T15:30:14Z
 **Goal**: Users can search for any city and see current weather conditions — temperature, feels-like, condition icon, high/low, precipitation, humidity, wind — with no blank screens on any failure path
 **Depends on**: Nothing (first phase)
@@ -66,7 +66,12 @@ Plans:
   1. The app renders without horizontal overflow and with all data visible at 375px, 768px, 1024px, and 1280px — no content clipped, no layout broken, all tap targets ≥ 44px at every breakpoint
   2. A "Details" panel (collapsed by default) expands to show UV index, wind direction (cardinal + degrees), visibility (if available), humidity, sunrise, and sunset in the location's local timezone — all times correct for a city in a different timezone than the browser
   3. "Updated X minutes ago" is visible whenever data is loaded; going offline shows a "showing cached data from X minutes ago" banner; with no cache and no network, a friendly error message appears — never a blank screen
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Responsive layout polish: AppLayout max-w-screen-xl, breakpoint grid, ≥ 44px tap targets, Playwright viewport tests (F5)
+- [ ] 03-02-PLAN.md — Details panel: DetailsPanel component, collapse/expand, UV/wind/sunrise/sunset, App.tsx wiring, Playwright tests (F6)
+- [ ] 03-03-PLAN.md — Offline/freshness: useOnlineStatus hook, OfflineBanner component, App.tsx wiring, Playwright offline tests (F7)
 
 ### Phase 4: Accessibility & Deployment
 **Goal**: Every user — keyboard-only, screen reader, reduced-motion — can fully use the app, and the app is live at a public HTTPS Vercel URL with Open-Meteo attribution
@@ -88,7 +93,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete | 2026-05-27 |
 | 2. Forecasts & Visuals | 3/3 | Complete | 2026-05-27 |
-| 3. Layout & Details | 0/TBD | Not started | - |
+| 3. Layout & Details | 0/3 | Not started | - |
 | 4. Accessibility & Deployment | 0/TBD | Not started | - |
 
 ---
