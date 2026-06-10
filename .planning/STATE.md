@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-06-10T20:31:53.819Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-06-10T20:37:08.327Z"
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 11
-  completed_plans: 9
-  percent: 82
+  completed_plans: 10
+  percent: 91
 ---
 
 # State: Simple Weather App
@@ -19,21 +19,21 @@ progress:
 
 **Core Value:** Answer "do I need an umbrella?" in under 3 seconds — current temperature and conditions visible above the fold with zero friction, no account, no ads.
 
-**Current Focus:** Phase 3 — Layout & Details (in progress — 03-01 complete)
+**Current Focus:** Phase 3 — Layout & Details (in progress — 03-02 complete)
 
 ---
 
 ## Current Position
 
 **Active Phase:** 3 — Layout & Details (in progress)
-**Active Plan:** Plan 03-01 (complete)
-**Status:** Phase 3 plan 1 complete — F5 responsive layout implemented
-**Progress:** [████████░░] 82%
+**Active Plan:** Plan 03-02 (complete)
+**Status:** Phase 3 plans 1+2 complete — F5 responsive layout + F6 collapsible Details panel implemented
+**Progress:** [█████████░] 91%
 
 ```
 Phase 1: Foundation           ██████████  Complete (5/5 plans)
 Phase 2: Forecasts & Visuals  ██████████  Complete (3/3 plans)
-Phase 3: Layout & Details     ██░░░░░░░░  In progress (1/? plans)
+Phase 3: Layout & Details     ████░░░░░░  In progress (2/? plans)
 Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 ```
 
@@ -43,9 +43,9 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 | Metric | Target | Current |
 |--------|--------|---------|
-| Plans complete | - | 9 |
+| Plans complete | - | 10 |
 | Phases complete | 4 | 2 |
-| Requirements shipped | 10 | 1 (F5 responsive layout) |
+| Requirements shipped | 10 | 2 (F5 responsive layout, F6 details panel) |
 
 ### Execution History
 
@@ -60,6 +60,7 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | Phase 02-forecasts-visuals P02 | 2 | 2 tasks | 6 files |
 | Phase 02-forecasts-visuals P03 | 3 | 2 tasks | 3 files |
 | Phase 03-layout-details P01 | 2 | 2 tasks | 5 files |
+| Phase 03-layout-details P02 | 2 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 | 18 WMO icons (not 19 as plan text stated) | Plan file list had 18 entries matching WMO_CODE_MAP exactly — text was a counting error |
 | `lg:grid lg:grid-cols-2 lg:gap-6` for daily+chart layout | Cleaner equal-width columns than flex approach; matches plan spec exactly |
 | `@tailwindcss/oxide-linux-x64-gnu` installed alongside musl variant | Environment is glibc-based; musl native binding was installed by npm but can't load without musl libc |
+| DetailsPanel shows windSpeedMax (not windSpeed) | Panel displays today's max wind speed — more meaningful for planning; current windSpeed removed as unused |
+| Visibility omitted from DetailsPanel | Open-Meteo current block has no visibility field; silently omitted per F6 spec |
 
 ### Critical Risks to Watch
 
@@ -119,11 +122,11 @@ Phase 4: Accessibility & Deployment ░░░░░░░░░░  Not started
 
 ## Session Continuity
 
-**Last session:** 2026-06-10T20:31:53.817Z
-**Stopped at:** Completed 03-01-PLAN.md
-**Next action:** Phase 3 plan 01 complete — continue Phase 3 next plan or verify with `/pivota_spec-verify-work 03-layout-details`
+**Last session:** 2026-06-10T20:37:08.326Z
+**Stopped at:** Completed 03-02-PLAN.md
+**Next action:** Phase 3 plans 01+02 complete — continue Phase 3 next plan (F7 offline/freshness) or verify with `/pivota_spec-verify-work 03-layout-details`
 
-**To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `03-01-SUMMARY.md` for Phase 3 plan 1 context.
+**To resume:** Read this file first, then `.planning/ROADMAP.md` for phase structure, then `03-02-SUMMARY.md` for Phase 3 plan 2 context.
 
 ---
 *STATE.md initialized: 2026-05-01*
